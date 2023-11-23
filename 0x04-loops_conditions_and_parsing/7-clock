@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 # Script that prints all possible combinations of two two-digit numbers
-hours=0
-minutes=0
 
-while [ $hours -lt 12 ]
+hours=0
+
+while [ $hours -le 12 ]
 do
     echo "hour: $hours"
     minutes=1
-    while [ $minutes -lt 60 ]
+    while [ $minutes -le 59 ]
     do
-        echo "$minutes"
-        ((minutes++))
+        echo " $minutes "
+        (( minutes++ ))
     done
-    ((hours++))
+    (( hours++ ))
 done

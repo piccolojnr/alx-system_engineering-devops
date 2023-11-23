@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #Filename: list_files.sh
-for filename in *
-do
-  echo "$filename"
+
+list=$(ls)
+for i in $list; do
+  echo "$i" | cut -d '-' -f2
 done

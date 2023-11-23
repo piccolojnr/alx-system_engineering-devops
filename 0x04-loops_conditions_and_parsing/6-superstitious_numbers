@@ -1,18 +1,16 @@
 #!/usr/bin/env bash
 # This script will print the numbers 1-20 but with some exceptions:
+# 4, 9, and 17 are bad luck numbers.
+
 i=1
+
 while [ $i -lt 21 ]
 do
     echo $i
-    if [ $i -eq 4 ]
-    then
-        echo "bad luck from China"
-    elif [ $i -eq 9 ]
-    then
-        echo "bad luck from Japan"
-    elif [ $i -eq 17 ]
-    then
-        echo "bad luck from Italy"
-    fi
-    ((i++))
+    case $i in
+        "4") echo "bad luck from China";;
+        "9") echo "bad luck from Japan";;
+        "17") echo "bad luck from Italy";;
+        esac
+        (( i++ ))
 done
