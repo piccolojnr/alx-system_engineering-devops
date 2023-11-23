@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-
-file_path="school"  # Change this to the actual path of your school file
-
+# check if file exists and is not empty
+file_path="school"  
 if [ -e "$file_path" ]; then
     echo "school file exists"
 
