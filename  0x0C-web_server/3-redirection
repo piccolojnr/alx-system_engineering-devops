@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#Configure a new Nginx server so that /redirect_me is redirecting to another page
+
+sudo sed -i '/listen 80 default_server/a rewrite ^/redirect_me https://www.google.com/ permanent;' /etc/nginx/sites-available/default
+
+sudo service nginx restart
