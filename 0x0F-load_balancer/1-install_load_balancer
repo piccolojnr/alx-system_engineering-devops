@@ -27,5 +27,5 @@ backend webservers
     server 26071-web-02 35.173.47.15:80 check
 "
 
-echo "$blcer" >> /etc/haproxy/haproxy.cfg
+sudo echo "$blcer" >> /etc/haproxy/haproxy.cfg
 sudo service haproxy restart
