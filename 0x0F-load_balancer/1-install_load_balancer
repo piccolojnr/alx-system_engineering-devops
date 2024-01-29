@@ -28,4 +28,4 @@ backend webservers
 "
 
 echo "$blcer" >> /etc/haproxy/haproxy.cfg
-service haproxy restart
+sudo service haproxy restart
