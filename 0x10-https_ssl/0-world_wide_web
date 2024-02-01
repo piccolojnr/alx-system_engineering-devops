@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Function to display information about a subdomain
+display_info() {
+    local domain="$1"
+    local subdomain="$2"
+    
+    # Fetch DNS records for the subdomain
+    records=$(dig +short "$subdomain.$domain")
+
+    # Display information about the subdomain
+    echo "The subdomain $subdomain is a $(echo "$records" | awk 'NR==1 {print $1}') record and points to $(echo "$records" | awk 'NR==1 {print $0}')"
+}
+
+# Function to display information for default subdomains
+display_default_subdomains() {
+    local domain="$1"
+    
+    # Default subdomains
+    subdomains=("www" "lb-01" "web-01" "web-02")
+    
+    # Display information for default subdomains
+    for subdomain in "${subdomains[@]}"; do
+        display_info "$domain" "$subdomain"
+    done
+}
+
+# Main script logic
+if [ "$#" -eq 1 ]; then
+    # Display information for default subdomains when only domain is provided
+    display_default_subdomains "$1"
+elif [ "$#" -eq 2 ]; then
+    # Display information for the specified subdomain
+    display_info "$1" "$2"
+else
+    echo "Usage: $0 <domain> [subdomain]"
+    exit 1
+fi
