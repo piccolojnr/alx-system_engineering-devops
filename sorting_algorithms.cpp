@@ -130,42 +130,35 @@ vector<int> selection_sort(vector<int> array)
 
 vector<int> merge_arr(vector<int> arr1, vector<int> arr2)
 {
+    int n1 = arr1.size(), n2 = arr2.size();
     int i = 0, j = 0;
-    vector<int> res;
-    while (arr1[i] || arr2[j])
+    vector<int> arr;
+    while (i < n1 && j < n2)
     {
-        if (i > arr1.size() - 1 && j < arr2.size())
+        if (arr1[i] <= arr2[j])
         {
-            res.push_back(arr2[j]);
-            j++;
-        }
-        else if (j > arr2.size() - 1 && i < arr1.size())
-        {
-            res.push_back(arr1[i]);
+            arr.push_back(arr1[i]);
             i++;
         }
         else
         {
-            if (arr1[i] > arr2[j])
-            {
-                res.push_back(arr2[j]);
-                j++;
-            }
-            if (arr2[j] > arr1[i])
-            {
-                res.push_back(arr1[i]);
-                i++;
-            }
-            else
-            {
-                res.push_back(arr2[j]);
-                j++;
-                res.push_back(arr1[i]);
-                i++;
-            }
+            arr.push_back(arr2[j]);
+            j++;
         }
     }
-    return res;
+    while (i < n1)
+    {
+        arr.push_back(arr1[i]);
+        i++;
+    }
+
+    while (j < n2)
+    {
+        arr.push_back(arr2[j]);
+        j++;
+    }
+
+    return arr;
 }
 
 vector<int> merge_sort(vector<int> array)
