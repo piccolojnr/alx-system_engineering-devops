@@ -179,17 +179,41 @@ vector<int> merge_sort(vector<int> array)
     vector<int> res = merge_arr(left, right);
     return res;
 }
-
+void insertionSort(int arr[], int n)
+{
+    for (int i = 1; i < n; i++)
+    {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key)
+        {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
 int main()
 {
-    vector<int> array = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5};
-    cout << "unsorted array" << endl;
-    print_arr(array);
-    cout << endl;
-    vector<int> sorted_array = merge_sort(array);
-    cout << endl;
-    cout << "sorted array" << endl;
-    print_arr(sorted_array);
-    cout << endl;
+    int arr[] = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5};
+    int N = sizeof(arr) / sizeof(arr[0]);
+    insertionSort(arr, N);
+    for (int i = 0; i < N; i++)
+    {
+        cout << arr[i] << " ";
+    }
     return 0;
 }
+// int main()
+// {
+//     vector<int> array = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5};
+//     cout << "unsorted array" << endl;
+//     print_arr(array);
+//     cout << endl;
+//     vector<int> sorted_array = merge_sort(array);
+//     cout << endl;
+//     cout << "sorted array" << endl;
+//     print_arr(sorted_array);
+//     cout << endl;
+//     return 0;
+// }
