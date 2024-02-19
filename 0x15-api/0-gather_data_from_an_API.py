@@ -5,10 +5,6 @@ import requests
 from sys import argv
 
 if __name__ == "__main__":
-    if len(argv) != 2 or not argv[1].isdigit():
-        print("Usage: {} employee_id".format(argv[0]))
-        exit(1)
-
     base_url = "https://jsonplaceholder.typicode.com"
     employee_id = int(argv[1])
     todos_url = "{}/todos?userId={}".format(base_url, employee_id)
