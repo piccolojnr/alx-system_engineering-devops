@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """_summary_
 """
-import requests
 import json
+import requests
 
 
 def export_to_json(data):
@@ -16,13 +16,13 @@ def export_to_json(data):
 
 
 def fetch_tasks():
+    """ """
     all_tasks = {}
+    base_url = "https://jsonplaceholder.typicode.com"
 
     for user_id in range(1, 11):  # Assuming user IDs are from 1 to 10
-        user_url = "https://jsonplaceholder.typicode.com/users/{}".format(user_id)
-        todos_url = "https://jsonplaceholder.typicode.com/todos?userId={}".format(
-            user_id
-        )
+        user_url = "{}/users/{}".format(base_url, user_id)
+        todos_url = "{}/todos?userId={}".format(base_url, user_id)
 
         try:
             user_response = requests.get(user_url)

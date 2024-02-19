@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """_summary_
 """
-import requests
 import csv
+import requests
 from sys import argv
 
 
@@ -11,7 +11,12 @@ def export_to_csv(user_id, user_name, tasks):
     filename = "{}.csv".format(user_id)
 
     with open(filename, "w", newline="") as csvfile:
-        fieldnames = ["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"]
+        fieldnames = [
+            "USER_ID",
+            "USERNAME",
+            "TASK_COMPLETED_STATUS",
+            "TASK_TITLE",
+        ]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
         writer.writeheader()
@@ -33,10 +38,9 @@ if __name__ == "__main__":
         exit(1)
 
     employee_id = int(argv[1])
-    user_url = "https://jsonplaceholder.typicode.com/users/{}".format(employee_id)
-    todos_url = "https://jsonplaceholder.typicode.com/todos?userId={}".format(
-        employee_id
-    )
+    base_url = "https://jsonplaceholder.typicode.com"
+    user_url = "{}/users/{}".format(base_url, employee_id)
+    todos_url = "{}/todos?userId={}".format(base_url, employee_id)
 
     try:
         user_response = requests.get(user_url)
