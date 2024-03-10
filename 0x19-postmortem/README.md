@@ -1,53 +1,52 @@
-**Postmortem: Web Stack Outage**
+**Postmortem: Ubuntu 14.04 Container Outage**
 
 **Issue Summary:**
-- **Duration:** 
-  - Start Time: March 8, 2024, 10:30 AM (UTC)
-  - End Time: March 8, 2024, 2:45 PM (UTC)
+- **Duration:**
+  - Start Time: March 8, 2024, 3:00 PM (UTC)
+  - End Time: March 8, 2024, 4:30 PM (UTC)
 - **Impact:**
-  - The outage affected the core authentication service, resulting in a 30% user base unable to log in. Users experienced delays in accessing their accounts, impacting overall user experience.
+  - The Apache web server on an isolated Ubuntu 14.04 container experienced an outage, causing a complete unavailability of the hosted website for all users.
 
 **Timeline:**
 - **Detection:**
-  - March 8, 2024, 10:30 AM (UTC): The issue was detected through automated monitoring alerts indicating a sudden spike in authentication failures.
+  - March 8, 2024, 3:00 PM (UTC): The issue was noticed as users reported an inability to access the website.
 - **Actions Taken:**
-  - Initial investigations focused on database health, assuming a potential bottleneck in user data retrieval.
-  - Misleadingly pursued a network latency hypothesis, leading to unnecessary checks and delays.
-  - The incident was escalated to the DevOps and Backend Engineering teams after 30 minutes of inconclusive investigation.
+  - Investigated Apache logs, suspecting potential misconfigurations.
+  - Explored network connectivity, ruling out external factors.
+  - Escalated the incident to the DevOps team after 20 minutes of unsuccessful investigation.
 - **Resolution:**
-  - Identified a database query optimization flaw causing delays in user authentication checks.
-  - Implemented an emergency fix by optimizing the query and deployed it to production at 1:45 PM (UTC).
-  - Monitored the system for an additional hour to ensure stability.
+  - Identified a critical security update missing in the Ubuntu 14.04 container, leading to Apache instability.
+  - Applied the missing update and restarted the Apache service at 4:15 PM (UTC).
+  - Monitored the container for an additional 15 minutes to confirm stable operations.
 
 **Root Cause and Resolution:**
 - **Root Cause:**
-  - The root cause was traced to an inefficient database query used for user authentication, causing a cascading effect on system response times.
-  - Specifically, a missing index in the user table resulted in suboptimal query performance, leading to delays in the authentication process.
+  - The outage was caused by a missing security update in the Ubuntu 14.04 container, leaving Apache vulnerable to a known exploit.
+  - The lack of the update resulted in unexpected behavior, leading to the web server's unresponsiveness.
 
 - **Resolution:**
-  - The immediate fix involved adding the missing index to the user table, significantly improving the efficiency of the authentication query.
-  - A thorough code review was initiated to identify any similar performance bottlenecks in other parts of the application.
-  - The database schema and query optimization process were revisited to prevent similar issues in the future.
+  - Applied the missing security update promptly to address the vulnerability.
+  - Restarted the Apache service to ensure the update took effect.
+  - Initiated a plan to migrate to a more recent and supported Ubuntu version in the near future.
 
 **Corrective and Preventative Measures:**
 - **Improvements/Fixes:**
-  - Conduct a comprehensive review of all database queries to identify and address potential performance bottlenecks.
-  - Implement regular audits of database indexes to ensure they align with evolving application requirements.
-  - Enhance monitoring alerts to provide more granular insights into specific service components, minimizing detection time.
+  - Implement a regular schedule for security updates on all containers.
+  - Establish a checklist for validating container configurations after updates.
+  - Plan a migration to a more recent Ubuntu version with long-term support.
 
 - **Tasks:**
   - **Short-Term:**
-    - Patch the production database with the missing index.
-    - Conduct a post-incident review with the engineering team to share insights and lessons learned.
-    - Update monitoring alerts to include specific metrics related to authentication response times.
+    - Conduct an immediate audit of all containers for missing security updates.
+    - Document and share the incident resolution steps with the team.
+    - Update the monitoring system to alert on critical security update status.
 
   - **Mid-Term:**
-    - Schedule a database performance audit to proactively identify and address potential bottlenecks.
-    - Implement a regular cadence for code reviews with a focus on query optimization.
-    - Enhance collaboration between DevOps and Backend Engineering teams for faster incident response.
+    - Schedule a review of container update procedures to prevent future oversights.
+    - Explore automation tools for streamlined security update management.
+    - Begin planning for the migration to a supported Ubuntu version.
 
   - **Long-Term:**
-    - Explore automated tools for continuous database optimization and query analysis.
-    - Establish a knowledge-sharing platform to disseminate incident learnings across the engineering organization.
-    - Conduct periodic training sessions on effective debugging and incident response strategies.
-
+    - Establish a policy for the regular review and update of containerized environments.
+    - Investigate the feasibility of automated testing for container configurations post-update.
+    - Develop a timeline for the migration to a more recent and supported Ubuntu version.
